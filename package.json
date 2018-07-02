@@ -4,7 +4,7 @@
   "license": "ISC",
   "author": "Buster Collings <busterc@gmail.com>",
   "repository": "busterc/lbl",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "bin": "lib/cli.js",
   "files": [
     "lib"

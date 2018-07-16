@@ -2,6 +2,13 @@
 
 > Process stdin, line by line, sort of like AWK but 100% JS
 
+## Prerequisites
+
+- There are a couple of handy globals available
+  - `$` is an alias for `global`
+  - `log` is an alias for `console.log`
+  - `chalk` is available for adding color to ouput
+
 ## Installation
 
 ```sh
@@ -23,7 +30,7 @@ Options
   -e, --each      function to run on each line [required]
 
   # Or, use a node module file with processing functions:
-  # onBefore, onAfter, onEach
+  # before(), after(), each()
   -r, --require   module file with functions
 
   -h, --help      show this usage info
@@ -36,7 +43,7 @@ Examples
   > XX
   > Matched 1 from 3
 
-  $ printf 'x\nXX\nxXx' | lbl -e 'x => { $.n++; if(x.match(/^X/)) { $.log("> "+ x); $.f++ } }' -b '()=>{$.log=console.log;$.n=0;$.f=0;$.log("<<BEGIN>>")}' -a '()=>{$.log("> Matched " + $.f + " from " + $.n)}'
+  $ printf 'x\\nXX\\nxXx' | lbl -e 'x => { n++; if (x.match(/^X/)) { log(chalk.yellow('> ') + x); f++; } }' -b '() => { $.n = 0; $.f = 0; log('<<BEGIN>>'); }' -a '() => { log('> Matched ' + f + ' from ' + n); }'
   <<BEGIN>>
   > XX
   > Matched 1 from 3
@@ -46,26 +53,25 @@ Examples
 
 ```js
 'use strict';
+/* global $, log, chalk, n:true, f:true */
 
-const $ = {
-  onEach: x => {
-    $.n++;
+module.exports = {
+  each: x => {
+    n++;
     if (x.match(/^X/)) {
-      $.log('> ' + x);
-      $.f++;
+      log(chalk.yellow('> ') + x);
+      f++;
     }
   },
-  onBefore: () => {
-    $.log = console.log;
+  before: () => {
     $.n = 0;
     $.f = 0;
-    $.log('<<BEGIN>>');
+    log('<<BEGIN>>');
   },
-  onAfter: () => {
-    $.log('> Matched ' + $.f + ' from ' + $.n);
+  after: () => {
+    log('> Matched ' + f + ' from ' + n);
   }
 };
-module.exports = $;
 ```
 
 ## License

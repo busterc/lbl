@@ -1,5 +1,7 @@
 # lbl [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/busterc/lbl.svg)](https://greenkeeper.io/)
+
 > Process stdin, line by line, sort of like AWK but 100% JS
 
 ## Prerequisites
